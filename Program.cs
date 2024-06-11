@@ -23,6 +23,7 @@ namespace Backend
             var builder = new ContainerBuilder();
 
             //Here you should register Interfaces with their referent classes
+            builder.RegisterType<ApplicationService>().SingleInstance();
 
             return builder.Build();
         }

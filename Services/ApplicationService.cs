@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace Backend.Services
 {
@@ -10,6 +11,7 @@ namespace Backend.Services
 
         public ApplicationService()
         {
+            DisplayMenu();
         }
 
         public void Run()
@@ -19,7 +21,22 @@ namespace Backend.Services
 
         private int DisplayMenu()
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+
+
+            sb.AppendLine("Main Menu");
+            sb.AppendLine("---------");
+            sb.AppendLine("");
+            sb.AppendLine("1. View Movie Stars List");
+            sb.AppendLine("2. Calculate Net Salary");
+            sb.AppendLine("3. Exit");
+
+            Console.WriteLine(sb);
+            
+            int input = int.Parse(Console.ReadLine());
+
+            return input;
+            
         }
 
     }
