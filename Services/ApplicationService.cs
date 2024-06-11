@@ -39,11 +39,11 @@ namespace Backend.Services
                     //Reading the data from the file path
                     List<MovieStar> data = reader.Read(filePath);
 
+                    DateTime today = DateTime.Now;
                     //Logging all of the information for each movie star in the data.
                     foreach (MovieStar person in data)
                     {
                         StringBuilder sb = new StringBuilder();
-                        DateTime today = DateTime.Now;
                         int year = YearCalculator.CalculateYearDifference(person.DateOfBirth, today);
 
 
