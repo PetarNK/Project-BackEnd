@@ -22,21 +22,25 @@ namespace Backend.Services
         public void Run()
         {
             var userChoice = DisplayMenu();
+
+            //If/else for different choices
             if (userChoice == 1)
             {
                 //log4net.Config.XmlConfigurator.Configure(); 
+
+
+                //Reader for the data from the file
                 IReadable reader = new Reader();
                 
                 string filePath = FileFinder.FindApplicationFile("input.txt").ToString();
-
+                //Using try/catch for any errors with the data from the file.
                 try
                 {
-                    // Assuming you have a class named MyData that matches the JSON structure
-                    List<Person> data = reader.Read(filePath);
+                    //Reading the data from the file path
+                    List<MovieStar> data = reader.Read(filePath);
 
-                    //Console.WriteLine("Data successfully read:");
-                    //Console.WriteLine(JsonConvert.SerializeObject(data, Formatting.Indented));
-                    foreach (Person person in data)
+                    //Logging all of the information for each movie star in the data.
+                    foreach (MovieStar person in data)
                     {
                         StringBuilder sb = new StringBuilder();
                         DateTime today = DateTime.Now;
@@ -51,6 +55,7 @@ namespace Backend.Services
                         Console.WriteLine(sb);
                     }
                 }
+
                 catch (Exception ex)
                 {
                     Console.WriteLine($"An error occurred: {ex.Message}");
@@ -68,7 +73,10 @@ namespace Backend.Services
             Run();
         }
 
-
+        /// <summary>
+        /// Method displaying the main menu. Awaits input!
+        /// </summary>
+        /// <returns></returns>
         private int DisplayMenu()
         {
             StringBuilder sb = new StringBuilder();

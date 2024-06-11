@@ -13,24 +13,18 @@ namespace Backend.Models
     internal class Reader : IReadable
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Reader));
-        public List<Person> Read(string filePath)
+        public List<MovieStar> Read(string filePath)
         {
             try
             {
-                //log.Info($"Reading JSON file from path: {filePath}");
 
                 // Read all text from the file
                 string json = File.ReadAllText(filePath);
 
-                //log.Debug($"File content: {json}");
-
                 // Deserialize the JSON into the specified type
-                List<Person> result = JsonConvert.DeserializeObject<List<Person>>(json);
+                List<MovieStar> result = JsonConvert.DeserializeObject<List<MovieStar>>(json);
 
-                
-
-                //log.Info("Successfully deserialized JSON content.");
-
+                //Returns the result in a List of Movie Stars
                 return result;
             }
             catch (Exception ex)

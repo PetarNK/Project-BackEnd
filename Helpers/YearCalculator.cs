@@ -8,6 +8,7 @@ namespace Backend.Helpers
 {
     public class YearCalculator
     {
+        //Method that calculates year difference, taking in account the month and day.
         public static int CalculateYearDifference(DateTime startDate, DateTime endDate)
         {
             int years = endDate.Year - startDate.Year;
