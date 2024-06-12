@@ -1,4 +1,5 @@
 ﻿using Backend.Models;
+using Backend.Models.Viewer;
 using System;
 using System.Text;
 
@@ -9,12 +10,14 @@ namespace Backend.Services
     {
         //Here you should create Menu which your Console application will show to user
         //User should be able to choose between: 1. Movie star 2. Calculate Net salary 3. Exit
-        private IReadable reader;
-        private string source = "input.txt";
+        private IReadable _reader;
+        private IViewer _viewer;
+        private string _source = "input.txt";
 
         public ApplicationService()
         {
-            this.reader = new Reader();
+            this._reader = new Reader();
+            this._viewer = new Viewer(_reader, _source);
         }
 
         public void Run()
@@ -26,8 +29,7 @@ namespace Backend.Services
                 //If/else for different choices
                 if (userChoice == 1)
                 {
-                    IMovieStar movieStars = new MovieStar(reader, source);
-                    movieStars.View();
+                    _viewer.View();
 
 
                 }

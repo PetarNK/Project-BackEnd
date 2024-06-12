@@ -1,13 +1,15 @@
-﻿using System;
-using System.Linq;
-using Autofac;
+﻿using Autofac;
 using Backend.Models;
+using Backend.Models.Viewer;
 using Backend.Services;
+using log4net;
+
 
 namespace Backend
 {
     class Program
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(Program));
         // This is your app entry point
         static void Main(string[] args)
         {
@@ -32,6 +34,7 @@ namespace Backend
             builder.RegisterType<ApplicationService>().SingleInstance();
             builder.RegisterType<Reader>().As<IReadable>();
             builder.RegisterType<MovieStar>().As<IMovieStar>();
+            builder.RegisterType<Viewer>().As<IViewer>();
 
             // DEBUG: Checking if services are registered
             //Console.WriteLine("Services registered successfully.");

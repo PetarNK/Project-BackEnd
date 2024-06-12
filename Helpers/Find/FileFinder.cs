@@ -1,32 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+using log4net;
+using System;
 
 namespace Backend.Helpers
 {
     public class FileFinder
     {
-        //Method to find a file by its name, starting from the application startup path and all the parent paths.
-        //If file is not found or root folder has been reached null is returned.
+        private static readonly ILog log = LogManager.GetLogger(typeof(FileFinder));
+
+        // Method to find a file by its name, starting from the application startup path and all the parent paths.
+        // If file is not found or root folder has been reached, null is returned.
         public static FileInfo FindApplicationFile(string fileName)
         {
+            log.Info($"Starting search for file: {fileName}");
+
             string startPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName);
+            log.Debug($"Initial start path: {startPath}");
+
             FileInfo file = new FileInfo(startPath);
-            while (!file.Exists)
+            try
             {
-                if (file.Directory.Parent == null)
+                while (!file.Exists)
                 {
-                    return null;
+                    if (file.Directory?.Parent == null)
+                    {
+                        log.Warn($"File not found: {fileName}");
+                        throw new FileNotFoundException();
+                    }
+
+                    DirectoryInfo parentDir = file.Directory.Parent;
+                    file = new FileInfo(Path.Combine(parentDir.FullName, file.Name));
+                    log.Debug($"Checking in parent directory: {parentDir.FullName}");
+
                 }
-                DirectoryInfo parentDir = file.Directory.Parent;
-                file = new FileInfo(Path.Combine(parentDir.FullName, file.Name));
+                
             }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            log.Info($"File found: {file.FullName}");
             return file;
         }
     }
 }
+

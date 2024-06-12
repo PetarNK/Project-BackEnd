@@ -187,6 +187,8 @@
     <Compile Include="Models\MovieStar\MovieStar.cs" />
     <Compile Include="Helpers\Read\Reader.cs" />
     <Compile Include="Models\Calculation\SalaryCalculator.cs" />
+    <Compile Include="Models\Viewer\IViewer.cs" />
+    <Compile Include="Models\Viewer\Viewer.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

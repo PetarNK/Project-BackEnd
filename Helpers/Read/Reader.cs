@@ -3,10 +3,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Backend.Models
 {
@@ -14,23 +10,29 @@ namespace Backend.Models
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Reader));
 
-
-
-        public ICollection<MovieStar> Read(string filePath)
+        public IEnumerable<MovieStar> Read(string filePath)
         {
             try
             {
-
                 // Read all text from the file
                 string json = File.ReadAllText(filePath);
 
-                // Deserialize the JSON into the specified type
+                // Logging the JSON content
+                log.Debug($"Read JSON content: {json}");
+
+                // Deserialize
                 ICollection<MovieStar> result = JsonConvert.DeserializeObject<List<MovieStar>>(json);
 
-                //Returns the result in a List of Movie Stars
+                if (result == null)
+                {
+                    log.Error("Deserialization returned null.");
+                    throw new InvalidOperationException("Deserialization returned null.");
+                }
+
+                // Return the result in a list of Movie Stars
                 return result;
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
                 log.Error($"An error occurred while reading the file: {ex.Message}", ex);
                 throw;
@@ -38,3 +40,4 @@ namespace Backend.Models
         }
     }
 }
+
