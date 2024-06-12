@@ -1,82 +1,83 @@
 ﻿using Backend.Models;
 using Backend.Models.Viewer;
+using log4net;
 using System;
-using System.Text;
-
+using System.Reflection;
 
 namespace Backend.Services
 {
     public class ApplicationService
     {
-        //Here you should create Menu which your Console application will show to user
-        //User should be able to choose between: 1. Movie star 2. Calculate Net salary 3. Exit
-        private IReadable _reader;
-        private IViewer _viewer;
-        private string _source = "input.txt";
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        private readonly IReadable _reader;
+        private readonly IViewer _viewer;
+        private readonly ISalaryCalculator _salaryCalculator;
+        private readonly string _source = "input.txt";
 
         public ApplicationService()
         {
-            this._reader = new Reader();
-            this._viewer = new Viewer(_reader, _source);
+            _reader = new Reader();
+            _viewer = new Viewer(_reader, _source);
+            _salaryCalculator = new SalaryCalculator(1000, 3000, 0.1M, 0.15M);
         }
 
         public void Run()
         {
             try
             {
-                var userChoice = DisplayMenu();
+                int userChoice = DisplayMenu();
 
-                //If/else for different choices
-                if (userChoice == 1)
+                switch (userChoice)
                 {
-                    _viewer.View();
-
-
+                    case 1:
+                        _viewer.View();
+                        break;
+                    case 2:
+                        _salaryCalculator.Calculate();
+                        break;
+                    case 3:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        throw new ArgumentException("Please choose an option from 1 to 3");
                 }
-                else if (userChoice == 2)
-                {
-                    SalaryCalculator calc = new SalaryCalculator(1000, 3000, 0.1M, 0.15M);
-                    calc.Calculate();
-                }
-                else if (userChoice == 3)
-                {
-                    Environment.Exit(0);
-                } else
-                {
-                    throw new ArgumentException("Please choose an option from 1 to 3");
-                }
-
             }
-            catch(Exception ex)
+            catch (ArgumentException ex)
             {
+                log.Error($"An error has occurred: {ex.Message} ", ex);
                 Console.WriteLine(ex.Message);
             }
-                Run();
+            Run();
         }
 
-        /// <summary>
-        /// Method displaying the main menu. Awaits input!
-        /// </summary>
-        /// <returns></returns>
         private int DisplayMenu()
         {
-            StringBuilder sb = new StringBuilder();
+            Console.WriteLine("Main Menu");
+            Console.WriteLine("---------");
+            Console.WriteLine();
+            Console.WriteLine("1. View Movie Stars List");
+            Console.WriteLine("2. Calculate Net Salary");
+            Console.WriteLine("3. Exit");
+            Console.WriteLine();
 
-
-            sb.AppendLine("Main Menu");
-            sb.AppendLine("---------");
-            sb.AppendLine("");
-            sb.AppendLine("1. View Movie Stars List");
-            sb.AppendLine("2. Calculate Net Salary");
-            sb.AppendLine("3. Exit");
-
-            Console.WriteLine(sb);
-            
-            int input = int.Parse(Console.ReadLine());
-
+            int input;
+            while (true)
+            {
+                Console.Write("Enter your choice: ");
+                if (int.TryParse(Console.ReadLine(), out input))
+                {
+                    if (input >= 1 && input <= 3)
+                        break;
+                    else
+                        Console.WriteLine("Invalid choice. Please enter a number from 1 to 3.");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid number.");
+                }
+            }
             return input;
-            
         }
-
     }
 }
