@@ -183,10 +183,10 @@
     <Compile Include="Helpers\Calculator\YearCalculator.cs" />
     <Compile Include="Models\MovieStar\IMovieStar.cs" />
     <Compile Include="Helpers\Read\IReadable.cs" />
-    <Compile Include="Models\SalaryCalculator\ISalaryCalculator.cs" />
+    <Compile Include="Models\Calculation\ISalaryCalculator.cs" />
     <Compile Include="Models\MovieStar\MovieStar.cs" />
     <Compile Include="Helpers\Read\Reader.cs" />
-    <Compile Include="Models\SalaryCalculator\SalaryCalculator.cs" />
+    <Compile Include="Models\Calculation\SalaryCalculator.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

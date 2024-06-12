@@ -9,34 +9,47 @@ namespace Backend.Services
     {
         //Here you should create Menu which your Console application will show to user
         //User should be able to choose between: 1. Movie star 2. Calculate Net salary 3. Exit
+        private IReadable reader;
+        private string source = "input.txt";
 
         public ApplicationService()
         {
-            
+            this.reader = new Reader();
         }
 
         public void Run()
         {
-            var userChoice = DisplayMenu();
-
-            //If/else for different choices
-            if (userChoice == 1)
-            { 
-                IMovieStar movieStars = new MovieStar();
-                movieStars.View();
-                
-
-            } else if(userChoice == 2)
+            try
             {
-                SalaryCalculator calc = new SalaryCalculator();
-                calc.Calculate();
-            }
-            else if(userChoice == 3)
-            {
-                Environment.Exit(0);
-            }
+                var userChoice = DisplayMenu();
 
-            Run();
+                //If/else for different choices
+                if (userChoice == 1)
+                {
+                    IMovieStar movieStars = new MovieStar(reader, source);
+                    movieStars.View();
+
+
+                }
+                else if (userChoice == 2)
+                {
+                    SalaryCalculator calc = new SalaryCalculator(1000, 3000, 0.1M, 0.15M);
+                    calc.Calculate();
+                }
+                else if (userChoice == 3)
+                {
+                    Environment.Exit(0);
+                } else
+                {
+                    throw new ArgumentException("Please choose an option from 1 to 3");
+                }
+
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+                Run();
         }
 
         /// <summary>

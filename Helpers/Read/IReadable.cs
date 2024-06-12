@@ -2,7 +2,7 @@
 
 namespace Backend.Models
 {
-    internal interface IReadable
+    public interface IReadable
     {
         ICollection<MovieStar> Read(string filePath);
     }
