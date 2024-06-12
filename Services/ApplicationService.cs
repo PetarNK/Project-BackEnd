@@ -1,11 +1,7 @@
 ﻿using Backend.Models;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
-using System.Xml.Linq;
-using Backend.Helpers;
+
 
 namespace Backend.Services
 {
@@ -26,13 +22,14 @@ namespace Backend.Services
             //If/else for different choices
             if (userChoice == 1)
             { 
-                MovieStarViewer viewer = new MovieStarViewer();
-                viewer.View();
+                IMovieStar movieStars = new MovieStar();
+                movieStars.View();
                 
 
             } else if(userChoice == 2)
             {
-
+                SalaryCalculator calc = new SalaryCalculator();
+                calc.Calculate();
             }
             else if(userChoice == 3)
             {

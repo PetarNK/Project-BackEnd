@@ -8,5 +8,6 @@ namespace Backend.Models
 {
     internal interface IMovieStar
     {
+        void View();
     }
 }

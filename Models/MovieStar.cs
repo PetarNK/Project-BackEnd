@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Backend.Models
 {
-    public class MovieStar
+    public class MovieStar : IMovieStar
     {
 		public DateTime DateOfBirth { get; set; }
 		public string Name { get; set; }
@@ -59,5 +59,5 @@ namespace Backend.Models
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
-        }
+    }
 }
