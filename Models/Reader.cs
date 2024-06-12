@@ -13,7 +13,7 @@ namespace Backend.Models
     internal class Reader : IReadable
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Reader));
-        public List<MovieStar> Read(string filePath)
+        public ICollection<MovieStar> Read(string filePath)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace Backend.Models
                 string json = File.ReadAllText(filePath);
 
                 // Deserialize the JSON into the specified type
-                List<MovieStar> result = JsonConvert.DeserializeObject<List<MovieStar>>(json);
+                ICollection<MovieStar> result = JsonConvert.DeserializeObject<List<MovieStar>>(json);
 
                 //Returns the result in a List of Movie Stars
                 return result;

@@ -25,41 +25,10 @@ namespace Backend.Services
 
             //If/else for different choices
             if (userChoice == 1)
-            {
-                //log4net.Config.XmlConfigurator.Configure(); 
-
-
-                //Reader for the data from the file
-                IReadable reader = new Reader();
+            { 
+                MovieStarViewer viewer = new MovieStarViewer();
+                viewer.View();
                 
-                string filePath = FileFinder.FindApplicationFile("input.txt").ToString();
-                //Using try/catch for any errors with the data from the file.
-                try
-                {
-                    //Reading the data from the file path
-                    List<MovieStar> data = reader.Read(filePath);
-
-                    DateTime today = DateTime.Now;
-                    //Logging all of the information for each movie star in the data.
-                    foreach (MovieStar person in data)
-                    {
-                        StringBuilder sb = new StringBuilder();
-                        int year = YearCalculator.CalculateYearDifference(person.DateOfBirth, today);
-
-
-
-                        sb.AppendLine($"{person.Name} {person.Surname}");
-                        sb.AppendLine(person.Sex);
-                        sb.AppendLine(person.Nationality);
-                        sb.AppendLine($"{year} years old");
-                        Console.WriteLine(sb);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
-                }
 
             } else if(userChoice == 2)
             {

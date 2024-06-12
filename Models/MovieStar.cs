@@ -2,7 +2,7 @@
 
 namespace Backend.Models
 {
-    public class Person
+    public class MovieStar
     {
 		public DateTime DateOfBirth { get; set; }
 		public string Name { get; set; }

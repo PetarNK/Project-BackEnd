@@ -11,6 +11,8 @@ namespace Backend.Helpers
 {
     public class FileFinder
     {
+        //Method to find a file by its name, starting from the application startup path and all the parent paths.
+        //If file is not found or root folder has been reached null is returned.
         public static FileInfo FindApplicationFile(string fileName)
         {
             string startPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName);

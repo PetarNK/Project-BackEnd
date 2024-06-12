@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Backend.Models;
 using Backend.Services;
 
 namespace Backend
@@ -24,6 +25,7 @@ namespace Backend
 
             //Here you should register Interfaces with their referent classes
             builder.RegisterType<ApplicationService>().SingleInstance();
+            builder.RegisterType<Reader>().SingleInstance();
 
             return builder.Build();
         }
