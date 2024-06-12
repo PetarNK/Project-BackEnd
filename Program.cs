@@ -25,7 +25,8 @@ namespace Backend
 
             //Here you should register Interfaces with their referent classes
             builder.RegisterType<ApplicationService>().SingleInstance();
-            builder.RegisterType<Reader>().SingleInstance();
+            //builder.RegisterType<IReadable>().As<Reader>();
+            //builder.RegisterType<IMovieStar>().As<MovieStar>();
 
             return builder.Build();
         }

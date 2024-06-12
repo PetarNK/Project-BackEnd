@@ -13,6 +13,9 @@ namespace Backend.Models
     internal class Reader : IReadable
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Reader));
+
+
+
         public ICollection<MovieStar> Read(string filePath)
         {
             try

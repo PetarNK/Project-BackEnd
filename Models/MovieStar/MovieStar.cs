@@ -7,6 +7,12 @@ namespace Backend.Models
 {
     public class MovieStar : IMovieStar
     {
+
+        public MovieStar()
+        {
+
+        }
+
 		public DateTime DateOfBirth { get; set; }
 		public string Name { get; set; }
 		public string Surname { get; set; }

@@ -33,7 +33,7 @@ namespace Backend.Services
             }
             else if(userChoice == 3)
             {
-
+                Environment.Exit(0);
             }
 
             Run();

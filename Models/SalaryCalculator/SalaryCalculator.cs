@@ -7,12 +7,17 @@ using System.Threading.Tasks;
 
 namespace Backend.Models
 {
-    internal class SalaryCalculator
+    internal class SalaryCalculator : ISalaryCalculator
     {
         private const int MinimumTaxableSalary = 1000;
         private const int MaximumTaxableSalary = 3000;
         private const decimal IncomeTax = 0.1M;
         private const decimal SocialContributionTax = 0.15M;
+
+        public SalaryCalculator()
+        {
+
+        }
         
 
         public void Calculate()
