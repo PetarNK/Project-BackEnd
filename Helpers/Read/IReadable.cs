@@ -4,6 +4,6 @@ namespace Backend.Models
 {
     public interface IReadable
     {
-        IEnumerable<MovieStar> Read(string filePath);
+        IEnumerable<MovieStar> Read(string s);
     }
 }

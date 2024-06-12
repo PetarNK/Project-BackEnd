@@ -6,10 +6,11 @@ using System.IO;
 
 namespace Backend.Models
 {
-    internal class Reader : IReadable
+    public class Reader : IReadable
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Reader));
 
+        
         public IEnumerable<MovieStar> Read(string filePath)
         {
             try

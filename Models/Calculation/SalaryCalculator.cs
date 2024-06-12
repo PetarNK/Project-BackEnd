@@ -1,9 +1,10 @@
-﻿using log4net;
+﻿using Backend.Models.Calculation;
+using log4net;
 using System;
 
 namespace Backend.Models
 {
-    internal class SalaryCalculator : ISalaryCalculator
+    public class SalaryCalculator : ISalaryCalculator
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(SalaryCalculator));
 
@@ -11,13 +12,15 @@ namespace Backend.Models
         private int maximumTaxableSalary;
         private decimal incomeTaxPercentage;
         private decimal socialContributionTaxPercentage;
+        private readonly ITaxCalculation _taxCalculation;
 
-        public SalaryCalculator(int minimumSalary, int maximumSalary, decimal incomeTaxPercentage, decimal socialTaxPercentage)
+        public SalaryCalculator(int minimumSalary, int maximumSalary, decimal incomeTaxPercentage, decimal socialTaxPercentage, ITaxCalculation taxCalculation)
         {
             MinimumTaxableSalary = minimumSalary;
             MaximumTaxableSalary = maximumSalary;
             IncomeTaxPercentage = incomeTaxPercentage;
             SocialContributionTaxPercentage = socialTaxPercentage;
+            _taxCalculation = taxCalculation;
         }
 
         public int MinimumTaxableSalary
@@ -93,7 +96,7 @@ namespace Backend.Models
 
                 log.Info($"Gross salary input: {grossSalary}");
 
-                decimal netSalary = grossSalary <= MinimumTaxableSalary ? grossSalary : CalculateNetSalary(grossSalary);
+                decimal netSalary = grossSalary <= MinimumTaxableSalary ? grossSalary : CalculateNetSalary(grossSalary, MaximumTaxableSalary);
 
                 log.Info($"Calculated net salary: {netSalary}");
 
@@ -106,27 +109,22 @@ namespace Backend.Models
             }
         }
 
-        private decimal CalculateNetSalary(int grossSalary)
+        public decimal CalculateNetSalary(int grossSalary, int? maxTaxableSalary = null)
         {
             log.Debug($"Calculating net salary for gross salary: {grossSalary}");
+            int taxableAmountAboveMinimum = grossSalary - MinimumTaxableSalary;
 
-            decimal incomeTaxValue = CalculateTax(grossSalary, IncomeTaxPercentage);
-            decimal socialContributionTaxValue = CalculateTax(grossSalary, SocialContributionTaxPercentage, MaximumTaxableSalary);
+            int taxableAmountBetweenMinimumAndMaximum = maxTaxableSalary.HasValue && grossSalary > maxTaxableSalary
+                ? maxTaxableSalary.Value - MinimumTaxableSalary
+                : taxableAmountAboveMinimum;
+
+            decimal incomeTaxValue = _taxCalculation.CalculateTax(taxableAmountAboveMinimum, incomeTaxPercentage);
+            decimal socialContributionTaxValue = _taxCalculation.CalculateTax(taxableAmountBetweenMinimumAndMaximum, socialContributionTaxPercentage);
 
             log.Debug($"Income tax value: {incomeTaxValue}, Social contribution tax value: {socialContributionTaxValue}");
 
             return grossSalary - (incomeTaxValue + socialContributionTaxValue);
         }
-
-        private decimal CalculateTax(int grossSalary, decimal taxPercentage, int? maxTaxableSalary = null)
-        {
-            int taxableAmount = maxTaxableSalary.HasValue && grossSalary > maxTaxableSalary
-                ? maxTaxableSalary.Value - MinimumTaxableSalary
-                : grossSalary - MinimumTaxableSalary;
-
-            log.Debug($"Calculating tax for gross salary: {grossSalary}, tax percentage: {taxPercentage}, taxable amount: {taxableAmount}");
-
-            return taxableAmount * taxPercentage;
-        }
     }
 }
+

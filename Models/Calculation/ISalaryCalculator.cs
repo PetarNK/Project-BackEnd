@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Backend.Models
 {
-    internal interface ISalaryCalculator
+    public interface ISalaryCalculator
     {
         void Calculate();
+        decimal CalculateNetSalary(int i, int? d);
 
     }
 }

@@ -181,6 +181,8 @@
   <ItemGroup>
     <Compile Include="Helpers\Find\FileFinder.cs" />
     <Compile Include="Helpers\Calculator\YearCalculator.cs" />
+    <Compile Include="Models\Calculation\ITaxCalculation.cs" />
+    <Compile Include="Models\Calculation\TaxCalculation.cs" />
     <Compile Include="Models\MovieStar\IMovieStar.cs" />
     <Compile Include="Helpers\Read\IReadable.cs" />
     <Compile Include="Models\Calculation\ISalaryCalculator.cs" />
@@ -192,6 +194,10 @@
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BusinessLogic.cs" />
+    <Compile Include="Services\ContainerConfig.cs" />
+    <Compile Include="Services\IApplicationService.cs" />
+    <Compile Include="Services\IBusinessLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
