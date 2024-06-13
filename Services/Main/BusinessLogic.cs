@@ -55,7 +55,7 @@ namespace Backend.Services
             Console.WriteLine("2. Calculate Net Salary");
             Console.WriteLine("3. Exit");
             Console.WriteLine();
-
+            log.Info("Creating the menu");
             int input;
             while (true)
             {
@@ -65,10 +65,12 @@ namespace Backend.Services
                     if (input >= 1 && input <= 3)
                         break;
                     else
+                        log.Info("Invalid number input");
                         Console.WriteLine("Invalid choice. Please enter a number from 1 to 3.");
                 }
                 else
                 {
+                    log.Info("Invalid data type input");
                     Console.WriteLine("Invalid input. Please enter a valid number.");
                 }
             }

@@ -9,7 +9,7 @@ namespace Backend.Helpers
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(FileFinder));
 
-        // Method to find a file by its name, starting from the application startup path and all the parent paths.
+        // Method to find a file by its name, starting from the application startup path through all the parent paths.
         // If file is not found or root folder has been reached, null is returned.
         public static FileInfo FindApplicationFile(string fileName)
         {

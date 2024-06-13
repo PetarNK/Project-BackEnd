@@ -10,10 +10,10 @@ namespace Backend.Models.Viewer
     public class Viewer : IViewer
     {
         private readonly IReadable _reader;
-        private readonly string _source;
+        private readonly ISource _source;
         private static readonly ILog log = LogManager.GetLogger(typeof(Viewer));
 
-        public Viewer(IReadable reader, string source)
+        public Viewer(IReadable reader, ISource source)
         {
             _reader = reader ?? throw new ArgumentNullException(nameof(reader));
             _source = source ?? throw new ArgumentNullException(nameof(source));
@@ -23,11 +23,12 @@ namespace Backend.Models.Viewer
         {
             try
             {
-                string filePath = FileFinder.FindApplicationFile(_source)?.ToString();
+                string source = _source.GetSourceName();
+                string filePath = FileFinder.FindApplicationFile(source)?.ToString();
 
                 if (string.IsNullOrEmpty(filePath))
                 {
-                    log.Error($"File not found: {_source}");
+                    log.Error($"File not found: {source}");
                     throw new FileNotFoundException();
                 }
 
